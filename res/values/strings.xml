@@ -19,7 +19,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- The name of the application. -->
-    <string name="app_name">Searchable Maps App</string>
+    <string name="app_name">Walk MSU</string>
     
     <!-- The label for the search button on the first screen -->
     <string name="search_button_label">Search</string>

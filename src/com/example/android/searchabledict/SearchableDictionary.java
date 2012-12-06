@@ -77,18 +77,19 @@ public class SearchableDictionary extends Activity
         //setting the image
         mImage.setImageResource(R.drawable.sparty_image);
         
+        // set what happens when you click the "About" button
         aboutButton.setOnClickListener(new OnClickListener()
         {
         	@Override
 			public void onClick(View v)
         	{
-        		Intent aboutIntent = new Intent();
-        		aboutIntent.setClass(getApplicationContext(), AboutActivity.class);
+        		Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
         		startActivity(aboutIntent);
-        		
+        		//finish();
         	}
         });
         
+        // set what happens when you click the "Building List" button
         listButton.setOnClickListener(new OnClickListener()
         {
         	@Override
@@ -96,8 +97,20 @@ public class SearchableDictionary extends Activity
         	{
         		Intent listIntent = new Intent(getApplicationContext(), viewbuildings.class);
             	startActivity(listIntent);
-            	finish();
+            	//finish();
         	}
+        });
+        
+        // set what happens when you click the "Search" button
+        searchButton.setOnClickListener(new OnClickListener()
+        {
+        	@Override
+        	public void onClick(View v)
+        	{
+        		// call search requested function
+        		onSearchRequested();
+        	}
+        	
         });
 
         if (Intent.ACTION_VIEW.equals(intent.getAction())) 

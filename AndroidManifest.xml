@@ -62,6 +62,7 @@
         
         <activity android:name=".MapsActivity"></activity>
         <activity android:name=".viewbuildings"></activity>
+        <activity android:name=".AboutActivity"></activity>
 
         <!-- Provides search suggestions for words and their definitions. -->
         <provider android:name="DictionaryProvider"
