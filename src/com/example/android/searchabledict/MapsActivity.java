@@ -12,6 +12,7 @@ package com.example.android.searchabledict;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -104,44 +105,19 @@ public class MapsActivity extends  MapActivity
 	{
 		try {
 			
-            // System.out.println("IN TRY");
-            // names[1] = "build2";
+             System.out.println("IN TRY");
 
-			// InputStream stream = null;
-			// stream = assetManager.open("ID_file.txt");
-	        // System.err.println("AFTER Asset manager open");
-            
-			InputStream is = getResources().openRawResource(R.raw.idfile); 
-	          
-            // AssetFileDescriptor descriptor = getAssets().openFd("idfile1.txt"); 
-            // FileReader reader = new FileReader(descriptor.getFileDescriptor()); 
-            
-	        BufferedReader f = new BufferedReader(new InputStreamReader(is)); 
-	        String line = "";
-		    //  names[2] = "build3";
-                
-	        while ((line = f.readLine())!=null) 
-	        {
-	            String[] a = line.split(",");
-	            String ID = a[a.length-1];
-	            String BuildingName = "";
-	            
-	            for (int i=0; i<a.length-1; i++)
-	            {
-	                BuildingName = BuildingName + a[i];
-	                if (i<a.length-2)
-	                {
-	                	BuildingName = BuildingName + ",";
-	                }
-	            }
-	            
-	            buildingsDictionary.put(BuildingName, ID);
-	            //namesB[buildingsCounter] = BuildingName;
-	                
-		        //System.err.println(BuildingName);
-
-	            buildingsCounter++;
-	        }
+			DBAdapter db = new DBAdapter(this); 
+            db.open();
+            Cursor cursor = db.getAllBuildings();
+            cursor.moveToFirst();
+            int length = cursor.getCount();
+    	      for (int i=0; i<length; i++) {
+    	    	  d.put( cursor.getString(2), cursor.getString(3) );
+    	    	  cursor.moveToNext();
+    	     }
+    	      db.close();
+    	      cursor.close();
 	    } catch (Exception e) 
 	    {
 	        System.err.println("Unable to read from ID_file.txt");
@@ -169,6 +145,7 @@ public class MapsActivity extends  MapActivity
     		currentBuildingID.trim();
     		String currentBuildingIDParsed = currentBuildingID.replaceAll("\\W", "");
     		
+            System.out.println("IN WEBSERVICE REQUEST");
             //webservice get request
     		HttpGet httpGet =	new HttpGet("https://dev.gis.msu.edu/FlexData/wayfinding?QUERY=" + 
     											java.net.URLEncoder.encode(
@@ -235,7 +212,11 @@ public class MapsActivity extends  MapActivity
         public boolean draw(Canvas canvas, MapView mapView, 
         boolean shadow, long when)       //draw stairs
         {
-        	super.draw(canvas, mapView, shadow);   
+        	super.draw(canvas, mapView, shadow);  
+        	double lat = globalStrings.currentUserLat * 1000000;
+        	double lon = globalStrings.currentUserLong * 1000000;
+        	currentUserLocationGPSpoint = new GeoPoint((int)lat, (int)lon);
+        	mapView.getController().setCenter(currentUserLocationGPSpoint);
             
             //fill the dictionary with the building names and numbers
         	//FillDictionary(buildingsDictionary);

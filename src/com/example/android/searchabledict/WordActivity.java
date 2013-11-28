@@ -42,6 +42,7 @@ public class WordActivity extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	System.out.println("IN WORDACTIVITY CREATE");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.word);

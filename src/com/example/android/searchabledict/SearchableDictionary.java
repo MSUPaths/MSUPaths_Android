@@ -16,29 +16,34 @@
 
 package com.example.android.searchabledict;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.MenuInflater;
 import android.view.ViewGroup;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TwoLineListItem;
-
-import java.util.List;
 
 /**
  * The main activity for the dictionary.  Also displays search results triggered by the search
@@ -55,6 +60,7 @@ public class SearchableDictionary extends Activity
     private Button searchButton;
     private Button listButton;
     private Button aboutButton;
+    private DBAdapter mDB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -76,6 +82,11 @@ public class SearchableDictionary extends Activity
         
         //setting the image
         mImage.setImageResource(R.drawable.sparty_image);
+        
+		//load the database      
+		mDB = new DBAdapter(this);
+		mDB.open();
+//		FillMasterDatabase(mDB);	
         
         // set what happens when you click the "About" button
         aboutButton.setOnClickListener(new OnClickListener()
@@ -100,7 +111,7 @@ public class SearchableDictionary extends Activity
             	//finish();
         	}
         });
-        
+	
         // set what happens when you click the "Search" button
         searchButton.setOnClickListener(new OnClickListener()
         {
@@ -115,6 +126,7 @@ public class SearchableDictionary extends Activity
 
         if (Intent.ACTION_VIEW.equals(intent.getAction())) 
         {
+        	System.out.println("IN ACTIONVIEW");        	
             // from click on search results
             
         	// removing the photo (8 = GONE, meaning it should not take up space in the layout)
@@ -123,17 +135,19 @@ public class SearchableDictionary extends Activity
         	// making the list visible again (0 = VISIBLE)
         	mList.setVisibility(0);
         	
-        	Dictionary.getInstance().ensureLoaded(getResources());
-            String word = intent.getDataString();
-            Dictionary.Word theWord = Dictionary.getInstance().getMatches(word).get(0);
-            launchWord(theWord);
+            String id = intent.getDataString();
+            launchWord( mDB.searchByID(id) );
             finish();
         } 
         else if (Intent.ACTION_SEARCH.equals(intent.getAction())) 
         {
+        	System.out.println("IN ACTIONSEARCH");
             String query = intent.getStringExtra(SearchManager.QUERY);
+           
             mTextView.setText(getString(R.string.search_results, query));
-            WordAdapter wordAdapter = new WordAdapter(Dictionary.getInstance().getMatches(query.toUpperCase()));
+            Cursor dbCursor = mDB.searchBuilding(query);
+            dbCursor.moveToFirst();
+            WordAdapter2 wordAdapter = new WordAdapter2(dbCursor);
             mList.setAdapter(wordAdapter);
             mList.setOnItemClickListener(wordAdapter);
         }
@@ -182,57 +196,61 @@ public class SearchableDictionary extends Activity
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void launchWord(Dictionary.Word theWord) 
+    
+    private void launchWord(Cursor cursor) 
     {
+        cursor.moveToFirst();
+    	System.out.println("IN LAUNCHWORD: "+cursor.getString(0));
         Intent next = new Intent();
         next.setClass(this, WordActivity.class);
-        next.putExtra("word", theWord.word);
-        next.putExtra("definition", theWord.definition);
-        next.putExtra("abbr", theWord.abbr);
-        next.putExtra("common", theWord.common);
-        next.putExtra("description", theWord.description);
-        next.putExtra("imagename", theWord.imagename);
+        next.putExtra("word", cursor.getString(2));
+        next.putExtra("definition", cursor.getString(3));
+        next.putExtra("abbr", cursor.getString(1));
+        next.putExtra("common", cursor.getString(2));
+        next.putExtra("description", cursor.getString(4));
+        next.putExtra("imagename", cursor.getString(5));
+        mDB.close();
+        cursor.close();
         startActivity(next);
     }
-
-    class WordAdapter extends BaseAdapter implements AdapterView.OnItemClickListener 
+    
+    class WordAdapter2 extends BaseAdapter implements AdapterView.OnItemClickListener 
     {
 
-        private final List<Dictionary.Word> mWords;
+        private final Cursor mCursor;
         private final LayoutInflater mInflater;
 
-        public WordAdapter(List<Dictionary.Word> words) 
+        public WordAdapter2(Cursor dbCursor) 
         {
-            mWords = words;
+            mCursor = dbCursor;
             mInflater = (LayoutInflater) SearchableDictionary.this.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
-		public int getCount() 
+    	public int getCount() 
         {
-            return mWords.size();
+            return mCursor.getCount();
         }
 
         @Override
-		public Object getItem(int position) 
-        {
-            return position;
-        }
-
-        @Override
-		public long getItemId(int position) 
+    	public Object getItem(int position) 
         {
             return position;
         }
 
         @Override
-		public View getView(int position, View convertView, ViewGroup parent) 
+    	public long getItemId(int position) 
+        {
+            return position;
+        }
+
+        @Override
+    	public View getView(int position, View convertView, ViewGroup parent) 
         {
             TwoLineListItem view = (convertView != null) ? (TwoLineListItem) convertView :
                     createView(parent);
-            bindView(view, mWords.get(position));
+            bindView(view, mCursor);
             return view;
         }
 
@@ -245,16 +263,54 @@ public class SearchableDictionary extends Activity
             return item;
         }
 
-        private void bindView(TwoLineListItem view, Dictionary.Word word) 
+        private void bindView(TwoLineListItem view, Cursor cursor) 
         {
-            view.getText1().setText(word.word);
-            view.getText2().setText(word.abbr);
+            view.getText1().setText(cursor.getString(2));
+            view.getText2().setText(cursor.getString(1));
         }
 
         @Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
+    	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
         {
-            launchWord(mWords.get(position));
+        	Cursor buildCursor = mDB.searchByID(mCursor.getString(0));
+        	mCursor.close();
+        	launchWord(buildCursor);
         }
+        
     }
+	private void FillMasterDatabase(DBAdapter db)
+	{
+		InputStream is = getResources().openRawResource(R.raw.build_master); 
+		BufferedReader f = new BufferedReader(new InputStreamReader(is)); 
+		String line = "";
+		int rowId = 0;
+		int rowId2 = 0;
+		try{
+			while ((line = f.readLine())!=null) 
+			{
+					line.trim();
+					String[] a = line.split(", ");  // split ID, latitude, longitude into array
+					db.insertBuilding(Integer.toString(rowId), a[0], a[1], a[2], a[3], a[4], a[5], a[6] );
+					db.virtualBuilding(Integer.toString(rowId), a[0], a[1], a[2], a[3], a[4], a[5], a[6] );
+					db.insertAlias(Integer.toString(rowId2), Integer.toString(rowId), a[7]);	
+					db.virtualAlias(Integer.toString(rowId), Integer.toString(rowId), a[1]);
+					rowId2++;
+					if( a.length - 8 > 0 ){
+						int i = a.length-1;
+						while( i > 7 ){
+							db.insertAlias( Integer.toString(rowId2), Integer.toString(rowId) , a[i] );
+							db.virtualAlias(Integer.toString(rowId2), Integer.toString(rowId) , a[i] );
+							i--;
+							rowId2++;
+						}
+					}
+					rowId++;
+			}
+		}
+		catch( IOException e){
+			e.printStackTrace();
+		}
+	}
 }
+
+

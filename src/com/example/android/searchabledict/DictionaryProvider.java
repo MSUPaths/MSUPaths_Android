@@ -19,14 +19,12 @@ package com.example.android.searchabledict;
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.text.TextUtils;
-
-import java.util.List;
 
 /**
  * Provides search suggestions for a list of words and their definitions.
@@ -34,12 +32,13 @@ import java.util.List;
 public class DictionaryProvider extends ContentProvider {
 
     public static String AUTHORITY = "dictionary";
-
+    private Context context;
+    private DBAdapter mDB;
     private static final int SEARCH_SUGGEST = 0;
     private static final int SHORTCUT_REFRESH = 1;
     private static final UriMatcher sURIMatcher = buildUriMatcher();
 
-    /**
+    /*
      * The columns we'll include in our search suggestions.  There are others that could be used
      * to further customize the suggestions, see the docs in {@link SearchManager} for the details
      * on additional columns that are supported.
@@ -50,8 +49,6 @@ public class DictionaryProvider extends ContentProvider {
             SearchManager.SUGGEST_COLUMN_TEXT_2,
             SearchManager.SUGGEST_COLUMN_INTENT_DATA,
             };
-
-
     /**
      * Sets up a uri matcher for search suggestion and shortcut refresh queries.
      */
@@ -66,14 +63,16 @@ public class DictionaryProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Resources resources = getContext().getResources();
-        Dictionary.getInstance().ensureLoaded(resources);
+        mDB = new DBAdapter(getContext());
+        mDB.open();
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
+
+    	System.out.println("IN QUERY");
         if (!TextUtils.isEmpty(selection)) {
             throw new IllegalArgumentException("selection not allowed for " + uri);
         }
@@ -102,24 +101,29 @@ public class DictionaryProvider extends ContentProvider {
     }
 
     private Cursor getSuggestions(String query, String[] projection) {
-        String processedQuery = query == null ? "" : query.toUpperCase();
-        List<Dictionary.Word> words = Dictionary.getInstance().getMatches(processedQuery);
+
+    	System.out.println("IN GETSUGGESTIONS");
+        Cursor matches = mDB.searchBuilding(query);
+        matches.moveToFirst();
 
         MatrixCursor cursor = new MatrixCursor(COLUMNS);
         long id = 0;
-        for (Dictionary.Word word : words) {
-            cursor.addRow(columnValuesOfWord(id++, word));
-        }
-
-        return cursor;
+        if(matches!= null){ 
+        for(int i=0; i< matches.getCount(); i++){
+        	cursor.addRow(columnValuesOfWord(id++, matches));
+        	matches.moveToNext();
+        }}
+        return cursor; 
     }
+    
+    private Object[] columnValuesOfWord(long id, Cursor cursor) {
 
-    private Object[] columnValuesOfWord(long id, Dictionary.Word word) {
+    	System.out.println("IN COLUMNVALUESOFWORD");
         return new Object[] {
-                id,                  // _id
-                word.word,           // text1
-                word.definition,     // text2
-                word.word,           // intent_data (included when clicking on item)
+                id,                    // _id
+                cursor.getString(1),   // text1
+                cursor.getString(2),   // text2
+                cursor.getString(0),   // intent_data (included when clicking on item)
         };
     }
 

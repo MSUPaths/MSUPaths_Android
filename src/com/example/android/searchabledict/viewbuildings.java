@@ -1,21 +1,14 @@
 package com.example.android.searchabledict;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class viewbuildings extends ListActivity {
@@ -30,50 +23,19 @@ public class viewbuildings extends ListActivity {
 	public  void FillDictionary(Dictionary<String, String> d)
 	{
         System.out.println("IN FILL DICTIONARY");
-       // names[0] = "build1";
-		
-		//InputStream openRawResource1 = getContext.R.raw.idfile;
-		try {
-            System.out.println("IN TRY");
-            //     names[1] = "build2";
-
-			   // InputStream stream = null;
-			   // stream = assetManager.open("ID_file.txt");
-	           // System.err.println("AFTER Assed manager open");
-            InputStream is = getResources().openRawResource(R.raw.idfile); 
-	          
-            //     AssetFileDescriptor descriptor = getAssets().openFd("idfile1.txt"); 
-            //        FileReader reader = new FileReader(descriptor.getFileDescriptor()); 
-            
-	            BufferedReader f = new BufferedReader(new InputStreamReader(is)); 
-	            String line = "";
-		        //  names[2] = "build3";
-                
-	            while ((line = f.readLine())!=null) 
-	            {
-	            	String[] a = line.split(",");
-	                String ID = a[a.length-1];
-	                String BuildingName = "";
-	                for (int i=0; i<a.length-1; i++)
-	                {
-	                	BuildingName = BuildingName + a[i];
-	                	if (i<a.length-2)
-	                	{
-	                		BuildingName = BuildingName + ",";
-	                	}
-	                }
-	                d.put(BuildingName, ID);
-	               names[buildingsCounter] = BuildingName;
-	                
-		            //System.err.println(BuildingName);
-
-	                buildingsCounter++;
-	            }
-	        } catch (Exception e) {
-	            System.err.println("Unable to read from ID_file.txt");
-	        }
-	        //names[3] = "build4";
-
+        
+                  DBAdapter db = new DBAdapter(this); 
+                  db.open();
+                  Cursor cursor = db.getAllBuildings();
+                  cursor.moveToFirst();
+                  int length = cursor.getCount();
+          	      for (int i=0; i<length; i++) {
+          	    	  d.put( cursor.getString(2), cursor.getString(3) );
+          	    	  names[i] = cursor.getString(2);
+          	    	  buildingsCounter++;
+          	    	  cursor.moveToNext();
+          	     }
+          	      db.close();
 	}
 	
 	
@@ -98,7 +60,7 @@ public class viewbuildings extends ListActivity {
     protected void onListItemClick(ListView l,  View v, int position,long id)
 	{
 		 super.onListItemClick(l, v, position, id);
-		 //get the item taht was clicked
+		 //get the item that was clicked
 		 Object o = this.getListAdapter().getItem(position);
 		 String keyword = o.toString();
 		 
