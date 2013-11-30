@@ -109,10 +109,11 @@ public class DictionaryProvider extends ContentProvider {
         MatrixCursor cursor = new MatrixCursor(COLUMNS);
         long id = 0;
         if(matches!= null){ 
-        for(int i=0; i< matches.getCount(); i++){
-        	cursor.addRow(columnValuesOfWord(id++, matches));
-        	matches.moveToNext();
-        }}
+        	for(int i=0; i< matches.getCount(); i++){
+            	cursor.addRow(columnValuesOfWord(id++, matches));
+        		matches.moveToNext();
+        	}
+        }
         return cursor; 
     }
     

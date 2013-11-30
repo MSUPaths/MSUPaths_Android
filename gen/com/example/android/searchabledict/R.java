@@ -175,11 +175,12 @@ public final class R {
         public static final int menu=0x7f070000;
     }
     public static final class raw {
-        public static final int building_abbr=0x7f050000;
-        public static final int buildingfile=0x7f050001;
-        public static final int definitions=0x7f050002;
-        public static final int id_file=0x7f050003;
-        public static final int idfile=0x7f050004;
+        public static final int build_master=0x7f050000;
+        public static final int building_abbr=0x7f050001;
+        public static final int buildingfile=0x7f050002;
+        public static final int definitions=0x7f050003;
+        public static final int id_file=0x7f050004;
+        public static final int idfile=0x7f050005;
     }
     public static final class string {
         /**  Back button on the About page 

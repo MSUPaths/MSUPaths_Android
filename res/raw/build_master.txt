@@ -1,0 +1,123 @@
+ABB, MASON AND ABBOT HALL, 0302, University Housing - Residence Hall, abbot, 42.7311783007, -84.4745082095, Abbot Hall
+PTM, ABRAMS PLANETARIUM, 0165, Popular Destination, abrams, 42.7257336629, -84.4762820807, Planetarium (Abrams)
+HAB, HANNAH ADMINISTRATION, 0067, Administration - Popular Destination, hannah, 42.7297487681, -84.4821787413, John A. Hannah Administration Building
+FAE, FARRALL AG ENGINEERING HALL, 0091, XXXXX, farrall, 42.7249460072, -84.4776314791, Agricultural Engineering Hall (Farrall), Farrall Ag Eng Hall
+AGH, AGRICULTURE HALL, 0022, XXXXX, agriculture, 42.7307752474, -84.4796690928, Agriculture Hall, Ag Hall
+AKR, AKERS HALL, 0326, University Housing - Residence Hall, akers, 42.7243376731, -84.4662846956, Akers Hall (E&W)
+XXXXX, ALUMNI MEMORIAL CHAPEL, 0030, Popular Destination, alumni_chapel, 42.7283766079, -84.4741237352, Alumni Memorial Chapel
+XXXXX, ANGELL UNIVERSITY SERVICES BUILDING, 0133, XXXXX, angell, 42.7180515559, -84.4917775324, Angell Building
+ANH, ANTHONY HALL, 0132, XXXXX, anthony_hall, 42.7245340099, -84.479936587, Anthony Hall
+XXXXX, ARMSTRONG HALL, 0316, University Housing - Residence Hall, armstrong, 42.7308197773, -84.4974880213, Armstrong Hall
+AUD, AUDITORIUM, 0031, Arts & Culture - Popular Destination, auditorium, 42.7286803841, -84.4771823437, Auditorium
+XXXXX, BAILEY HALL, 0315, University Housing - Residence Hall, bailey_hall, 42.7302075281, -84.497458377, Bailey Hall
+BKR, BAKER HALL, 0182, XXXXX, baker, 42.7291978355, -84.4738338689, Baker Hall
+XXXXX, BEAL GARDENS GAZEBO, 0517, Nature Area - Garden, beal_garden, 42.7316147557, -84.4848264595, Beal Botanical Garden
+XXXXX, BEAUMONT TOWER, 0012, Popular Destination, beaumont_tower, 42.731977685, -84.4823189842, Beaumont Tower
+BH, BERKEY HALL, 0002, College of Social Science, berkey, 42.7329459062, -84.4784282635, Berkey Hall
+EBH, BESSEY HALL, 0079, XXXXX, bessey, 42.7291114353, -84.4790539007, Ernst Bessey Hall
+BCH, BIOCHEMISTRY, 0168, XXXXX, biochem, 42.7237294411, -84.4754409292, Biochemistry
+BPS, BIOMEDICAL PHYSICAL SCIENCES, 0160, XXXXX, biomedical_physical_science, 42.7242300209, -84.4767271861, Biomedical & Physical Sciences
+BSEC, BRESLIN STUDENT EVENTS CENTER , 0069, Athletics - Arts & Culture - Popular Destination, breslin, 42.7284686508, -84.4915509787, Breslin Center
+BDY, BRODY HALL , 0313, XXXXX, brody, 42.7318346042, -84.4961881172, Brody Hall
+XXXXX, BRYAN HALL , 0312, University Housing - Residence Hall, bryan_hall, 42.7323732935, -84.4975085259, Bryan Hall
+BCC, BUSINESS COLLEGE COMPLEX, 0080, XXXXX, bcc, 42.7271367003, -84.4724310945, Business College Complex
+XXXXX, BUTTERFIELD HALL , 0310, University Housing - Residence Hall, butterfield_hall, 42.7328605493, -84.4956836206, Butterfield Hall
+XXXXX, CAMPBELL HALL , 0304, University Housing - Residence Hall, campbell, 42.7347997249, -84.4847333831, Campbell Hall
+CSE, CASE HALL , 0321, University Housing - Residence Hall, case_hall, 42.7248414467, -84.4892714883, Case Hall (N&S)
+CEM, CHEMISTRY, 0163, XXXXX, chemistry, 42.7248511864, -84.4762744299, Chemistry
+CHH, CHITTENDEN HALL, 0019, XXXXX, chittenden, 42.7318479697, -84.4795000504, Alfred K. Chittenden Hall
+CLC, CLINICAL CENTER - CLINIC WING, 0200, Popular Destination, clinicalcenter, 42.7186111477, -84.4686281094, Clinical Center
+COM, COMMUNICATION ARTS, 0084, XXXXX, communication, 42.7219798834, -84.4819382327, Communication Arts and Sciences
+CC, COMPUTER CENTER, 0035, Administration - Computer Store, computer_center, 42.7291312354, -84.4807606305, Computer Center
+CRD, CONRAD HALL, 0328, XXXXX, conrad, 42.723362837, -84.4659697294, Conrad Hall
+CH, COOK HALL, 0020, XXXXX, cook, 42.7314733359, -84.4796736875, Albert J. Cook Hall
+XXXXX, COWLES HOUSE, 0009, XXXXX, cowles_house, 42.7331148379, -84.4847869323, Cowles House
+CTN, CYCLOTRON, 0164, Popular Destination, cyclotron, 42.7248462274, -84.4746207792, Cyclotron
+DH, DEMONSTRATION HALL, 0057, XXXXX, demonstration, 42.7296557349, -84.4893701085, Demonstration Hall
+DDF, DUFFY DAUGHERTY FOOTBALL, 0077, Athletics, daugherty, 42.725207929, -84.4875765493, Duffy "Hugh" Daugherty Football and Clara Bell Smith Student Athlete Academic Center
+XXXXX, EMMONS HALL , 0314, University Housing - Residence Hall, emmons_hall, 42.7302172753, -84.4956579031, Emmons Hall
+EB, ENGINEERING BUILDING, 0081, Library, engineering, 42.7242768074, -84.4820340499, Engineering Building
+EH, ERICKSON HALL, 0144, XXXXX, erickson, 42.7266200001, -84.4801410317, Erickson Hall
+EUS, EUSTACE-COLE HALL, 0015, XXXXX, eustace_cole, 42.7325725598, -84.4797196094, XXXXX
+FEE, FEE HALL, 0327, XXXXX, fee, 42.7225004265, -84.4662909074, Fee Hall (E&W)
+XXXXX, FIRE STATION, 0131, XXXXX, fire, 42.7255003656, -84.4896936216, Fire Station
+FST, FOOD SAFETY AND TOXICOLOGY, 0186, XXXXX, food_safety, 42.7211149775, -84.4751828633, Food Safety and Toxicology
+TFS, TROUT FOOD SCIENCE AND HUMAN NUTRITION BUILDING, 0179, XXXXX, foodsci, 42.7236091876, -84.4798128475, G. Malcolm Trout Food Science and Human Nutrition Building
+XXXXX, FOOD STORES, 0171, XXXXX, foodstores, 42.7177328188, -84.4893313898, Food Stores
+GEO, GEOGRAPHY BUILDING, 0176, XXXXX, geography, 42.7293729956, -84.4731350685, Geography Building
+XXXXX, YAKELEY AND GILCHRIST HALL, 0306, University Housing - Residence Hall, gilchrist, 42.7338755005, -84.4875989129, Gilchrist Hall
+GH, GILTNER HALL, 0028, XXXXX, giltner, 42.7300486737, -84.4774828382, Giltner Hall
+XXXXX, OLIN HEALTH CENTER, 0003, XXXXX, olin, 42.7334127238, -84.4795930543, Olin Memorial Health Center
+HLD, HOLDEN HALL, 0332, University Housing - Residence Hall, holden, 42.7206256021, -84.4896932095, Holden Hall (E&W)
+HLM, HOLMES HALL, 0330, University Housing - Residence Hall, holmes, 42.7262675826, -84.4663242369, Holmes Hall (E&W)
+HUB, HUBBARD HALL, 0331, University Housing - Residence Hall, hubbard, 42.7231504496, -84.464097099, Hubbard Hall (N&S)
+HE, HUMAN ECOLOGY, 0005, XXXXX, humanecology, 42.733964416, -84.4819980702, Human Ecology Building
+IC, INTRAMURAL RECREATIVE SPORTS-CIRCLE, 0051, Athletics - Popular Destination, imcircle, 42.7317970512, -84.4865363938, IM Circle
+IE, INTRAMURAL RECREATIVE SPORTS-EAST, 0175, Athletics - Popular Destination, imeast, 42.7248422754, -84.469144613, IM East
+IW, INTRAMURAL RECREATIVE SPORTS-WEST, 0151, Athletics - Popular Destination, im_sports_west, 42.7287165859, -84.4880299162, IM West
+MUN, MUNN ICE ARENA, 0059, Athletics - Popular Destination, munn, 42.7283259299, -84.4900988596, Clarence L. Munn Ice Arena
+ITF, TENNIS FACILITY, 0208, Athletics, tennis1, 42.7132007614, -84.4997647955, Indoor Tennis Facility
+UP, URBAN PLANNING & LANDSCAPE ARCHITECTURE - INSTRUCTIONAL MEDIA CENTER, 0082, XXXXX, instrmedia, 42.7237377707, -84.4833869726, Instructional Media Center
+CIP, INTERNATIONAL CENTER, 0169, Popular Destination - Food, internatcen, 42.7264389586, -84.4815252249, Delia Koo International Academic Center
+JF, JENISON FIELDHOUSE, 0056, Athletics, jenison, 42.7306933842, -84.490747046, Jenison Fieldhouse
+NKH, KEDZIE HALL (NORTH AND SOUTH), 0029, XXXXX, kedzie, 42.7298409012, -84.4791236187, North Kedzie Hall
+SKH, KEDZIE HALL (NORTH AND SOUTH), 0029, XXXXX, south_kedzie_hall, 42.7298409012, -84.4791236187, South Kedzie Hall
+KC, KELLOGG CENTER, 0055, Popular Destination - Food, kellogg_center, 42.7323402302, -84.4937438405, Kellogg Hotel and Conference Center
+KAC, KRESGE ART CENTER, 0150, XXXXX, kresge, 42.7285295352, -84.4757065277, Kresge Art Center
+XXXXX, LANDON HALL, 0305, University Housing - Residence Hall, landon, 42.7338745585, -84.4857110003, Landon Hall
+XXXXX, LINEN SERVICES, 0068, XXXXX, laundry, 42.7193466726, -84.4837481686, Laundry
+LAW, MSU COLLEGE OF LAW, 0083, Library, college_of_law, 42.7259672225, -84.4732295455, MSU College of Law
+LIB, LIBRARY, 0049, Library - Popular Destination, library, 42.7310339272, -84.4840975274, Main Library
+LS, LIFE SCIENCE, 0183, XXXXX, life, 42.7184365621, -84.4705258417, Life Sciences Building
+LH, LINTON HALL, 0014, XXXXX, linton, 42.7320920626, -84.4806698809, Robert S. Linton Hall
+MUS, MUSEUM, 0013, Popular Destination - Arts & Culture, museum, 42.7316530794, -84.4819958566, MSU Museum
+UB, UNION BUILDING, 0006, Popular Destination - Food, union, 42.7343639277, -84.4831964568, MSU Union
+XXXXX, MANLY MILES BUILDING, 0154, XXXXX, manlymiles, 42.7166493626, -84.4931501579, Manly Miles Building
+MAH, MARSHALL-ADAMS HALL, 0016, XXXXX, marshall_adams, 42.7322867633, -84.4792685269, Marshall-Adams Hall
+XXXXX, MASON AND ABBOT HALL, 0302, University Housing - Residence Hall, mason, 42.7311783007, -84.4745082095, Mason Hall
+XXXXX, MARY MAYO HALL, 0309, University Housing - Residence Hall, marymayo, 42.7348897853, -84.4865736705, Mayo Hall
+MCD, MCDONEL HALL, 0324, University Housing - Residence Hall, mcdonel, 42.7264881952, -84.4689377028, McDonel Hall (E&W)
+MB, MUSIC BUILDING, 0011, Arts & Culture, music, 42.7325559485, -84.4850361592, Music Building
+MPB, MUSIC PRACTICE, 0021, XXXXX, music_practice, 42.7324541378, -84.4841916791, Music Practice Building
+NR, NATURAL RESOURCES, 0180, XXXXX, natural_resources, 42.7225322887, -84.4795468768, Natural Resources Building
+NS, NATURAL SCIENCE, 0024, XXXXX, natural_science, 42.7308974793, -84.4774763719, Natural Sciences Building
+XXXXX, NISBET BUILDING, 0128, Administration, nisbet, 42.7157267524, -84.4932942537, Steven S. Nisbet Building
+XXXXX, OBSERVATORY, 0196, XXXXX, observatory, 42.7063702791, -84.4835848969, Observatory
+OB, OLD BOTANY, 0017, XXXXX, old_botany, 42.7321476868, -84.4796031909, Old Botany Building
+XXXXX, OLD COLLEGE FIELD - BASEBALL PRESSBOX, 0519L, Athletics - Field, XXXXX, 42.731582087, -84.4889092335, Old College Field Baseball Pressbox
+XXXXX, OLD COLLEGE FIELD - SOCCER PRESSBOX, 0519K, Athletics - Field, XXXXX, 42.7326438837, -84.4914461651, Old College Field Soccer Pressbox
+OHB, OLD HORTICULTURE, 0025, XXXXX, oldhort, 42.7321954046, -84.4784122271, Old Horticulture Building
+OH, OLDS HALL, 0047, Administration, olds, 42.7305490165, -84.482078364, Olds Hall
+OWN, OWEN GRADUATE HALL, 0320, University Housing - Residence Hall, owen, 42.7264369369, -84.4715942911, Owen Graduate Hall
+ASB, OYER SPEECH AND HEARING, 0089, XXXXX, speechhear, 42.7226207898, -84.4834923457, Herbert J. Oyer Speech Learning Hearing Clinic
+PAC, PACKAGING, 0177, XXXXX, packaging, 42.7228974302, -84.4804556056, Packaging Building
+PAV, PAVILION FOR AGRICULTURE AND LIVESTOCK EDUCATION, 0212, Popular Destination, pavilion, 42.7075259168, -84.4806585073, MSU Pavilion
+PLP, SNYDER AND PHILLIPS HALL, 0300, University Housing - Residence Hall, phillips, 42.7296649543, -84.4742920454, Phillips Hall
+XXXXX, PHYSICAL PLANT, 0167, Administration, physplnt, 42.7218283987, -84.486470136, Physical Plant
+PBL, PLANT BIOLOGY LABORATORIES, 0178, XXXXX, plantb, 42.7228371866, -84.4750404033, Plant Biology Laboratories
+PSG, PLANT SCIENCE GREENHOUSES, 0093, XXXXX, plantscisrnhs, 42.7214065096, -84.4775531934, Plant Science Greenhouses
+PSS, PLANT AND SOIL SCIENCE, 0086, XXXXX, plantsoil, 42.7220380724, -84.4740117679, Plant & Soil Sciences Building
+PS, PUBLIC SAFETY, 0087, Administration - Popular Destination, pubsafety, 42.7217228103, -84.4835565575, Police and Public Safety
+XXXXX, SIMON POWER PLANT, 0065, XXXXX, simonpp, 42.7173394568, -84.4840035846, T.B. Simon Power Plant
+PSY, PSYCHOLOGY BUILDING, 0027, XXXXX, psych_bldg, 42.7309381941, -84.4758033417, Psychology Building
+RAD, RADIOLOGY BUILDING, 0214, XXXXX, radiology, 42.717314603, -84.4674298631, Radiology
+XXXXX, RATHER HALL, 0311, University Housing - Residence Hall, rather_hall, 42.7328581027, -84.4974936478, Rather Hall
+SHW, SHAW HALL, 0317, University Housing - Residence Hall, shaw, 42.7268415327, -84.4766801063, Shaw Hall (E&W)
+SNY, SNYDER AND PHILLIPS HALL, 0300, University Housing - Residence Hall, snyder, 42.7296649543, -84.4742920454, Snyder Hall
+XXXXX, SOIL SCIENCE - LAB, 0430A, XXXXX, soilscires, 42.715499242, -84.4630971455, Soil Science Research
+XXXXX, SPARTAN STADIUM, 0058, Athletics - Popular Destination, stadium, 42.7281821559, -84.4862614394, Spartan Stadium
+XXXXX, SPARTAN VILLAGE COMMUNITY CENTER, 0194, University Housing - Apartments, svillage_comcenter, 42.7160888107, -84.5031186533, Spartan Village Apartments Community Center
+SSB, STUDENT SERVICES, 0142, Administration, student, 42.7321336382, -84.4769603526, Student Services Building
+XXXXX, MSU SURPLUS STORE & RECYCLING CENTER, 0190, XXXXX, surplus, 42.7188994911, -84.4971086522, Surplus Store and Recycling Center
+CTS, TENNIS COURTS - RESTROOM AND STORAGE BUILDING, 0538, Athletics, tennis, 42.7240137739, -84.4857894493, Tennis Courts
+XXXXX, UNIVERSITY VILLAGE COMMUNITY CENTER, 1705, University Housing - Apartments, uvillage, 42.7271679383, -84.4986788321, University Village
+XXXXX, VANHOOSEN HALL, 0319, XXXXX, vanhoosen, 42.7272324186, -84.471422253, Van Hoosen Hall
+VMC, VETERINARY MEDICAL CENTER, 0170, Library - Popular Destination, vetmed, 42.7218051103, -84.4701856244, Veterinary Medical Center
+XXXXX, VISITOR WELCOME CENTER, 0220, Popular Destination, visitor_information, 42.7198058321, -84.4906244722, Visitor Information
+WH, WELLS HALL, 0078, Library - Arts & Culture, wells, 42.7283349125, -84.482440525, Wells Hall
+WPC, WHARTON CENTER, 0085, Popular Destination - Arts & Culture, wharton, 42.7239898477, -84.4712794041, Clifton and Delores Wharton Center for Performing Arts
+XXXXX, WILLIAMS HALL, 0308, University Housing - Residence Hall, williams, 42.7340491487, -84.4886388426, Williams Hall
+XXXXX, WILLS HOUSE, 0008, XXXXX, willshouse, 42.7346110585, -84.4871925283, H. Merill Wills House
+WIL, WILSON HALL, 0322, University Housing - Residence Hall, wilson, 42.7228141302, -84.4900171996, Wilson Hall (E&W)
+WON, WONDERS HALL, 0323, University Housing - Residence Hall, wonders, 42.7245369752, -84.4908805832, Wonders Hall (N&S)
+YAK, YAKELEY AND GILCHRIST HALL, 0306, University Housing - Residence Hall, yakeley, 42.7338755005, -84.4875989129, Yakeley Hall

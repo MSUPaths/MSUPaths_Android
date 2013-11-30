@@ -86,7 +86,7 @@ public class SearchableDictionary extends Activity
 		//load the database      
 		mDB = new DBAdapter(this);
 		mDB.open();
-//		FillMasterDatabase(mDB);	
+		//FillMasterDatabase(mDB);	
         
         // set what happens when you click the "About" button
         aboutButton.setOnClickListener(new OnClickListener()
@@ -136,7 +136,7 @@ public class SearchableDictionary extends Activity
         	mList.setVisibility(0);
         	
             String id = intent.getDataString();
-            launchWord( mDB.searchByID(id) );
+            launchWord( mDB.searchByID(mDB.searchByID2(id).getString(1)) );
             finish();
         } 
         else if (Intent.ACTION_SEARCH.equals(intent.getAction())) 
@@ -292,14 +292,14 @@ public class SearchableDictionary extends Activity
 					String[] a = line.split(", ");  // split ID, latitude, longitude into array
 					db.insertBuilding(Integer.toString(rowId), a[0], a[1], a[2], a[3], a[4], a[5], a[6] );
 					db.virtualBuilding(Integer.toString(rowId), a[0], a[1], a[2], a[3], a[4], a[5], a[6] );
-					db.insertAlias(Integer.toString(rowId2), Integer.toString(rowId), a[7]);	
-					db.virtualAlias(Integer.toString(rowId), Integer.toString(rowId), a[1]);
+					db.insertAlias(Integer.toString(rowId2), Integer.toString(rowId), a[7].toUpperCase());	
+					db.virtualAlias(Integer.toString(rowId2), Integer.toString(rowId), a[7].toUpperCase());
 					rowId2++;
 					if( a.length - 8 > 0 ){
 						int i = a.length-1;
 						while( i > 7 ){
-							db.insertAlias( Integer.toString(rowId2), Integer.toString(rowId) , a[i] );
-							db.virtualAlias(Integer.toString(rowId2), Integer.toString(rowId) , a[i] );
+							db.insertAlias( Integer.toString(rowId2), Integer.toString(rowId) , a[i].toUpperCase() );
+							db.virtualAlias(Integer.toString(rowId2), Integer.toString(rowId) , a[i].toUpperCase() );
 							i--;
 							rowId2++;
 						}

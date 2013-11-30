@@ -181,6 +181,18 @@ public class DBAdapter{
  
     }
     
+    public Cursor searchByID2(String IDnumber) throws SQLException{
+        String query = "SELECT * FROM "
+        + DATABASE_TABLE_FTS +
+         " WHERE " +  KEY_ROWID_2 + " MATCH '" + IDnumber + "';";
+        Cursor mCursor = db.rawQuery(query,null);
+ 
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
     public Cursor searchByID(String IDnumber) throws SQLException {
         String query = "SELECT * FROM "
         + DATABASE_TABLE_FTS2 +
