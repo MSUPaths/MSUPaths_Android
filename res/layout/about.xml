@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
+        
+    <TextView
+        android:id="@+id/aboutTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_title"/>
     
-        <TextView
-            android:id="@+id/aboutTitle"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_title"/>
-        
-        <TextView
-            android:id="@+id/aboutText"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="About information here"/>
-        
-        <Button
-     		android:id="@+id/back_button"
-     		android:layout_height="wrap_content"
-     		android:layout_width="fill_parent"
-     		android:text="@string/about_back"
-     		android:onClick="selfDestruct"/>
+    <TextView
+        android:id="@+id/aboutText"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="About information here"/>
+    
+    <Button
+ 		android:id="@+id/back_button"
+ 		android:layout_height="wrap_content"
+ 		android:layout_width="fill_parent"
+ 		android:text="@string/about_back"
+ 		android:onClick="selfDestruct"/>    
 
 </LinearLayout>

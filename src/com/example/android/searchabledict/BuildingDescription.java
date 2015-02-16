@@ -1,41 +1,18 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.searchabledict;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.Intent;
-import android.widget.Button;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import com.google.android.maps.MapActivity;
 
-/**
- * Displays a word and its definition.
- */
-public class WordActivity extends Activity {
+public class BuildingDescription extends Activity {
 
-    private TextView mWord;
+    private TextView mBuilding;
     private TextView mDefinition;
     private TextView mAbbr;
-    private TextView mCommon;
     private ImageView mImage;
     private TextView mDescription;
     private Button btnGo;
@@ -44,12 +21,11 @@ public class WordActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.word);
+        setContentView(R.layout.description);
 
-        mWord = (TextView) findViewById(R.id.word);
+        mBuilding = (TextView) findViewById(R.id.building);
         mDefinition = (TextView) findViewById(R.id.definition);
         mAbbr = (TextView) findViewById(R.id.abbr);
-        mCommon = (TextView) findViewById(R.id.common);
         mImage = (ImageView) findViewById(R.id.photo);
         mDescription = (TextView) findViewById(R.id.description);
         btnGo = (Button) findViewById(R.id.go_button);
@@ -58,14 +34,13 @@ public class WordActivity extends Activity {
         
         Intent intent = getIntent();
 
-        String word = intent.getStringExtra("word");
+        String building = intent.getStringExtra("building");
         String definition = intent.getStringExtra("definition");
         String abbr = "Abbreviation: " + intent.getStringExtra("abbr");
-        String common = intent.getStringExtra("common");
         String description = "Category: " + intent.getStringExtra("description");
         String imagename = intent.getStringExtra("imagename");
         
-        mWord.setText(word);
+        mBuilding.setText(building);
         mDefinition.setText(definition);
 
         String fullDesc = "";
@@ -78,19 +53,19 @@ public class WordActivity extends Activity {
         	fullDesc += (description + "\n");
         }
         fullDesc += ("Building Code: "+definition+"\n");
-        mDescription.setText(fullDesc);
-        
+        mDescription.setText(fullDesc);        
+ 
         btnGo.setOnClickListener(new View.OnClickListener() {
-       	 
+          	 
             public void onClick(View arg0) {
                 //Starting a new Intent
-                Intent nextScreen = new Intent(getApplicationContext(), MapsActivity.class);
+                Intent nextScreen = new Intent(getApplicationContext(), MapDisplay.class);
  
-                nextScreen.putExtra("building_name", mWord.getText());
+                nextScreen.putExtra("building_name", mBuilding.getText());
                 nextScreen.putExtra("buiding_code", mDefinition.getText());
                 
                 //set global singleton to the name of the building
-       		 	globalStrings.nameSelectedBuilding = (String)mWord.getText();
+       		 	globalStrings.nameSelectedBuilding = (String)mBuilding.getText();
        		 	//set global path drawing state to one for on
        		 	globalStrings.pathDrawingState =1;
        		 	//set the webservice call boolean to on
@@ -100,8 +75,11 @@ public class WordActivity extends Activity {
                 finish();
  
             }
-        });
-        
+        });  
+
+
+        //Following provides corresponding image for each building
+
         if(imagename.equals("abbot"))
         {
         	mImage.setImageResource(R.drawable.abbot);
@@ -610,8 +588,6 @@ public class WordActivity extends Activity {
         {
         	mImage.setImageResource(R.drawable.spartan2);
         }
-        
-
-        
-    }
+                
+    }	
 }
