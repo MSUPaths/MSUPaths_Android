@@ -20,18 +20,18 @@
      		android:layout_height="wrap_content"
      		android:layout_width="fill_parent"
      		android:text="@string/search_button_label"
-     		android:onClick="selfDestruct"/>
+     		/>
     <Button
      		android:id="@+id/list_button"
      		android:layout_height="wrap_content"
      		android:layout_width="fill_parent"
      		android:text="@string/list_button_label"
-     		android:onClick="selfDestruct"/>
+     		/>
     <Button
      		android:id="@+id/about_button"
      		android:layout_height="wrap_content"
      		android:layout_width="fill_parent"
      		android:text="@string/about_button_label"
-     		android:onClick="selfDestruct"/>
+     		/>
     
 </LinearLayout>
