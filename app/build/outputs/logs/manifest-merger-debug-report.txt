@@ -1,0 +1,125 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:1:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:1:11
+	package
+		ADDED from AndroidManifest.xml:2:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:4:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+application
+ADDED from AndroidManifest.xml:6:5
+MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:17:5
+	android:label
+		ADDED from AndroidManifest.xml:9:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:7:9
+	android:icon
+		ADDED from AndroidManifest.xml:8:9
+activity#com.example.android.searchabledict.MainDisplay
+ADDED from AndroidManifest.xml:12:9
+	android:label
+		ADDED from AndroidManifest.xml:13:17
+	android:theme
+		ADDED from AndroidManifest.xml:14:17
+	android:name
+		ADDED from AndroidManifest.xml:12:19
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:16:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:17:17
+	android:name
+		ADDED from AndroidManifest.xml:17:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:18:17
+	android:name
+		ADDED from AndroidManifest.xml:18:27
+activity#com.example.android.searchabledict.BuildingDescription
+ADDED from AndroidManifest.xml:23:9
+	android:theme
+		ADDED from AndroidManifest.xml:24:17
+	android:name
+		ADDED from AndroidManifest.xml:23:19
+activity#com.example.android.searchabledict.MapDisplay
+ADDED from AndroidManifest.xml:26:9
+	android:name
+		ADDED from AndroidManifest.xml:26:19
+activity#com.example.android.searchabledict.BuildingList
+ADDED from AndroidManifest.xml:27:9
+	android:name
+		ADDED from AndroidManifest.xml:27:19
+activity#com.example.android.searchabledict.AboutApp
+ADDED from AndroidManifest.xml:28:9
+	android:name
+		ADDED from AndroidManifest.xml:28:19
+provider#com.example.android.searchabledict.DBProvider
+ADDED from AndroidManifest.xml:31:9
+	android:syncable
+		ADDED from AndroidManifest.xml:33:13
+	android:authorities
+		ADDED from AndroidManifest.xml:32:13
+	android:name
+		ADDED from AndroidManifest.xml:31:19
+activity#com.example.android.searchabledict.BuildingSearch
+ADDED from AndroidManifest.xml:35:9
+	android:name
+		ADDED from AndroidManifest.xml:35:19
+intent-filter#android.intent.action.SEARCH+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:37:13
+action#android.intent.action.SEARCH
+ADDED from AndroidManifest.xml:38:17
+	android:name
+		ADDED from AndroidManifest.xml:38:25
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:39:17
+	android:name
+		ADDED from AndroidManifest.xml:39:27
+meta-data#android.app.searchable
+ADDED from AndroidManifest.xml:43:13
+	android:resource
+		ADDED from AndroidManifest.xml:44:21
+	android:name
+		ADDED from AndroidManifest.xml:43:24
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:50:5
+MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:11:5
+	android:name
+		ADDED from AndroidManifest.xml:50:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:51:5
+	android:name
+		ADDED from AndroidManifest.xml:51:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:52:5
+	android:name
+		ADDED from AndroidManifest.xml:52:22
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from AndroidManifest.xml:53:5
+	android:name
+		ADDED from AndroidManifest.xml:53:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:54:5
+	android:name
+		ADDED from AndroidManifest.xml:54:22
+uses-feature#0x00020000
+ADDED from AndroidManifest.xml:56:5
+MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:13:5
+	android:required
+		ADDED from AndroidManifest.xml:58:9
+	android:glEsVersion
+		ADDED from AndroidManifest.xml:57:9
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:7:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/dan3488/dev/git/esri-devtopia/java-android-sdk/arcgis-android-api-lib-module/arcgis-android/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">arcgis-android-v10.2.5</string>
+    <!-- From: file:/Users/dan3488/dev/git/esri-devtopia/java-android-sdk/arcgis-android-api-lib-module/arcgis-android/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
