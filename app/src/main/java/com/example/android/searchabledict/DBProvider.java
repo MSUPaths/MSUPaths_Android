@@ -14,7 +14,7 @@ import android.net.Uri;
 public class DBProvider extends ContentProvider {
     public static String AUTHORITY = "database";
     private DBAdapter mDB;
-    private MatrixCursor mSuggestionMat;
+    private MatrixCursor mSuggestionMat = null;
 
     // The columns we'll include in our search suggestions
     private static final String[] COLUMNS = {
@@ -29,13 +29,12 @@ public class DBProvider extends ContentProvider {
         mDB = new DBAdapter(getContext());
         mDB.createDatabase();
         mDB.openDatabase();
-
-        mSuggestionMat = new MatrixCursor(COLUMNS);
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        mSuggestionMat = new MatrixCursor(COLUMNS);
         String query = uri.getLastPathSegment().toUpperCase();
         Cursor results =  mDB.getBuilding(query);
         for (int i = 0; i<results.getCount(); i++) {

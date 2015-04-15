@@ -52,8 +52,6 @@
             <!-- Receives the search request. -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <!-- Points to searchable meta data. -->

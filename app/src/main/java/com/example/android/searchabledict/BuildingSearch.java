@@ -40,5 +40,4 @@ public class BuildingSearch extends MainDisplay {
            
         }
     }
-    
 }

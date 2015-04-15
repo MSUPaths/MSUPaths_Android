@@ -1,102 +1,340 @@
+/* Copyright 2014 ESRI
+ *
+ * All rights reserved under the copyright laws of the United States
+ * and applicable international laws, treaties, and conventions.
+ *
+ * You may freely redistribute and use this sample code, with or
+ * without modification, provided you include the original copyright
+ * notice and use restrictions.
+ *
+ * See the use restrictions
+ * http://help.arcgis.com/en/sdk/10.0/usageRestrictions.htm.
+ */
+
 package com.example.android.searchabledict;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.text.Layout;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esri.android.map.GraphicsLayer;
+import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
-import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polyline;
+import com.esri.core.geometry.SpatialReference;
 import com.esri.core.map.Graphic;
+import com.esri.core.symbol.PictureMarkerSymbol;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.core.tasks.na.NAFeaturesAsFeature;
 import com.esri.core.tasks.na.Route;
+import com.esri.core.tasks.na.RouteDirection;
 import com.esri.core.tasks.na.RouteParameters;
 import com.esri.core.tasks.na.RouteResult;
 import com.esri.core.tasks.na.RouteTask;
 import com.esri.core.tasks.na.StopGraphic;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 //Will eventually display the map and draw the lines
-public class MapDisplay extends Activity {
+public class MapDisplay extends Activity implements
+        RoutingListFragment.onDrawerListSelectedListener{
 
-    public static MapView mMapView = null;
-    GraphicsLayer mGraphicsLayer;
+    public static MapView mMap = null;
+
     Route mRoute;
+    GraphicsLayer routeLayer, hiddenSegmentsLayer;
 
-    GraphicsLayer routeLayer;
+    // Symbol used to make route segments "invisible"
+    SimpleLineSymbol segmentHider = new SimpleLineSymbol(Color.WHITE, 5);
 
+    // Symbol used to highlight route segments
+    SimpleLineSymbol segmentShower = new SimpleLineSymbol(Color.RED, 5);
 
+    // Label showing the current direction, time, and length
+    TextView directionsLabel;
 
-    // Network tasks must be handled by background thread, handles query and displays route
-    private class RouteQuery extends AsyncTask<Double, Void, RouteResult> {
-        Exception mException;
+    // List of the directions for the current route (used for the ListActivity)
+    public static ArrayList<String> curDirections = null;
 
-        @Override
-        protected RouteResult doInBackground(Double... coords) {
-            mException = null;
-            RouteResult results = null;
-            try {
-                RouteTask routeTask = RouteTask.createOnlineRouteTask(getResources().getString(R.string.geocode_url), null);
-                RouteParameters routeParams = routeTask.retrieveDefaultRouteTaskParameters();
+    // Current route, route summary, and gps location
+    Route curRoute = null;
+    String routeSummary = null;
+    public static Point mLocation = new Point( -84.480924, 42.7250467);
 
-                // create routing features class
-                NAFeaturesAsFeature naFeatures = new NAFeaturesAsFeature();
+    // Global results variable for calculating route on separate thread
+    RouteTask mRouteTask = null;
+    RouteResult mResults = null;
 
-                // Create the stop points from point geometry
-                StopGraphic startPnt = new StopGraphic(new Point(coords[0], coords[1]));
-                StopGraphic endPnt = new StopGraphic(new Point(coords[2], coords[3]));
+    String mDestinationName;
 
-                // set features on routing feature class
-                naFeatures.setFeatures(new Graphic[]{startPnt, endPnt});
+    // Variable to hold server exception to show to user
+    Exception mException = null;
 
-                // set stops on routing feature class
-                routeParams.setStops(naFeatures);
-                results = routeTask.solve(routeParams);
-            } catch (Exception e) {
-                System.out.println("***ERROR: " + e + "***");
-            }
-            return results;
+    ImageView img_currLocation;
+
+    public static DrawerLayout mDrawerLayout;
+    LocationDisplayManager ldm;
+
+    // Handler for processing the results
+    final Handler mHandler = new Handler();
+    final Runnable mUpdateResults = new Runnable() {
+        public void run() {
+            updateUI();
         }
+    };
 
-        protected void onPostExecute(RouteResult results) {
-            if (mException == null) {
-                List<Route> routes = results.getRoutes();
-                System.out.println(routes.size());
-                for (int i = 0; i < routes.size(); i++) {
-                    mRoute = routes.get(i);
-                    // Access the whole route geometry and add it as a graphic
-                    Geometry routeGeom = mRoute.getRouteGraphic().getGeometry();
-                    Graphic symbolGraphic = new Graphic(routeGeom, new SimpleLineSymbol(Color.BLUE, 3));
-                    mGraphicsLayer.addGraphic(symbolGraphic);
-                }
-            }
-        }
-    }
+    // Progress dialog to show when route is being calculated
+    ProgressDialog dialog;
+
+    // Index of the currently selected route segment (-1 = no selection)
+    int selectedSegmentID = -1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps);
-        mMapView = (MapView) findViewById(R.id.map);
-        mGraphicsLayer = new GraphicsLayer();
-        mMapView.addLayer(mGraphicsLayer);
 
+        // Retrieve the map and initial extent from XML layout
+        mMap = (MapView) findViewById(R.id.map);
+
+        // Add the route graphic layer (shows the full route)
+        routeLayer = new GraphicsLayer();
+        mMap.addLayer(routeLayer);
+
+        // Initialize the RouteTask
+        try {
+            mRouteTask = RouteTask
+                    .createOnlineRouteTask(getResources().getString(R.string.geocode_url), null);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        // Add the hidden segments layer (for highlighting route segments)
+        hiddenSegmentsLayer = new GraphicsLayer();
+        mMap.addLayer(hiddenSegmentsLayer);
+
+        curDirections = new ArrayList<String>();
+
+        // Make the segmentHider symbol "invisible"
+        segmentHider.setAlpha(1);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        img_currLocation = (ImageView) findViewById(R.id.iv_myLocation);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        // Set up the directions label
+        directionsLabel = (TextView) findViewById(R.id.directionsLabel);
+
+        // Get destination name, latitude, and longitude from intent
         Intent intent = getIntent();
+        mDestinationName = intent.getStringExtra("building_name");
+        Point destination = new Point(Double.valueOf(intent.getStringExtra("longitude")), Double.valueOf(intent.getStringExtra("latitude")));
+        QueryDirections(mLocation, destination);
 
-        double startLong = -84.480924;  // should be changed to user's current location
-        double startLat = 42.7250467;
 
-        double endLat = Double.valueOf(intent.getStringExtra("latitude"));
-        double endLong = Double.valueOf(intent.getStringExtra("longitude"));
+        /**
+         * On single clicking the directions label, start a ListActivity to show
+         * the list of all directions for this route. Selecting one of those
+         * items will return to the map and highlight that segment.
+         *
+         */
+        directionsLabel.setOnClickListener(new View.OnClickListener() {
 
-        new RouteQuery().execute(startLong, startLat, endLong, endLat);
+            public void onClick(View v) {
+                if (curDirections == null)
+                    return;
+
+                mDrawerLayout.openDrawer(Gravity.END);
+
+                String segment = directionsLabel.getText().toString();
+
+                ListView lv = RoutingListFragment.mDrawerList;
+                for (int i = 0; i < lv.getCount() - 1; i++) {
+                    String lv_segment = lv.getItemAtPosition(i).toString();
+                    if (segment.equals(lv_segment)) {
+                        lv.setSelection(i);
+                    }
+                }
+            }
+        });
+
     }
 
+    /**
+     * Set query parameters and run route query in new thread
+     */
+    private void QueryDirections(final Point mLocation, final Point p) {
+
+        // Show that the route is calculating
+        dialog = ProgressDialog.show(MapDisplay.this, "Walk MSU", "Calculating route...", true);
+        // Spawn the request off in a new thread to keep UI responsive
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    // Start building up routing parameters
+                    RouteParameters rp = mRouteTask.retrieveDefaultRouteTaskParameters();
+                    NAFeaturesAsFeature rfaf = new NAFeaturesAsFeature();
+
+                    // Create the stop points (start at our location, go to pressed location)
+                    StopGraphic point1 = new StopGraphic(mLocation);
+                    StopGraphic point2 = new StopGraphic(p);
+
+                    rfaf.setFeatures(new Graphic[] { point1, point2 });
+                    rfaf.setCompressedRequest(true);
+                    rp.setStops(rfaf);
+
+                    // Solve the route and use the results to update UI when received
+                    mResults = mRouteTask.solve(rp);
+                    mHandler.post(mUpdateResults);
+                } catch (Exception e) {
+                    mException = e;
+                    mHandler.post(mUpdateResults);
+                }
+            }
+        };
+        // Start the operation
+        t.start();
+    }
+
+    /**
+     * Updates the UI after a successful rest response has been received.
+     */
+    void updateUI() {
+        dialog.dismiss();
+
+        if (mResults == null) {
+            Toast.makeText(MapDisplay.this, mException.toString(), Toast.LENGTH_LONG).show();
+            curDirections = null;
+            return;
+        }
+
+        // Creating a fragment if it has not been created
+        FragmentManager fm = getFragmentManager();
+        if (fm.findFragmentByTag("Nav Drawer") == null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            RoutingListFragment frag = new RoutingListFragment();
+            ft.add(frag, "Nav Drawer");
+            ft.commit();
+        } else {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(fm.findFragmentByTag("Nav Drawer"));
+            RoutingListFragment frag = new RoutingListFragment();
+            ft.add(frag, "Nav Drawer");
+            ft.commit();
+        }
+
+        // Unlock the Navigation Drawer
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+        curRoute = mResults.getRoutes().get(0);
+
+        // Symbols for the route and the destination (blue line, checker flag)
+        SimpleLineSymbol routeSymbol = new SimpleLineSymbol(Color.BLUE, 3);
+        PictureMarkerSymbol destinationSymbol = new PictureMarkerSymbol(
+                mMap.getContext(), getResources().getDrawable(
+                R.drawable.ic_action_place));
+
+        // Add all the route segments with their relevant information to the hiddenSegmentsLayer
+        // Add the direction information to the list of directions
+        int count = 0;
+        for (RouteDirection rd : curRoute.getRoutingDirections()) {
+            HashMap<String, Object> attribs = new HashMap<String, Object>();
+            attribs.put("text", rd.getText());
+            attribs.put("time", Double.valueOf(rd.getMinutes()));
+            attribs.put("length", Double.valueOf(rd.getLength()));
+            attribs.put("count", Integer.toString(count));
+            curDirections.add(String.format("%d. %s%n%.1f time (%.1f length)",
+                    count, rd.getText(), rd.getMinutes(), rd.getLength()));
+            Graphic routeGraphic = new Graphic(rd.getGeometry(), segmentHider,
+                    attribs);
+            hiddenSegmentsLayer.addGraphic(routeGraphic);
+            count++;
+        }
+        // Reset the selected segment
+        selectedSegmentID = -1;
+
+        // Add the full route graphics, start and destination graphic to the routeLayer
+        Graphic routeGraphic = new Graphic(curRoute.getRouteGraphic().getGeometry(), routeSymbol);
+        Graphic endGraphic = new Graphic(
+                ((Polyline) routeGraphic.getGeometry()).getPoint(((Polyline) routeGraphic
+                        .getGeometry()).getPointCount() - 1), destinationSymbol);
+
+        routeLayer.addGraphics(new Graphic[] { routeGraphic, endGraphic });
+
+        // Get the full route summary
+        routeSummary = String.format("Path to %s%n%.1f minutes (%.1f miles)",
+                mDestinationName, curRoute.getTotalMinutes(),
+                curRoute.getTotalMiles());
+
+        directionsLabel.setText(routeSummary);
+
+        // Zoom to the extent of the entire route with a padding
+        mMap.setExtent(curRoute.getEnvelope(), 250);
+
+        // Replacing the first and last direction segments
+        curDirections.remove(0);
+        curDirections.add(0, "Start Location");
+
+        curDirections.add(mDestinationName);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMap.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMap.unpause();
+    }
+
+ /*
+ * When the user selects the segment from the listview, it gets highlighted on the map
+ */
+    @Override
+    public void onSegmentSelected(String segment) {
+
+        if (segment == null) return;
+
+        // Segment begins with direction number
+        String count  = segment.split(". ")[0];
+
+        // Look for the graphic that corresponds to this direction
+        for (int index : hiddenSegmentsLayer.getGraphicIDs()) {
+            Graphic g = hiddenSegmentsLayer.getGraphic(index);
+            if (count.equals((String) g.getAttributeValue("count"))) {
+
+                // When found, hide the currently selected, show the new selection
+                hiddenSegmentsLayer.updateGraphic(selectedSegmentID,segmentHider);
+                hiddenSegmentsLayer.updateGraphic(index, segmentShower);
+                selectedSegmentID = index;
+
+                // Update label with information for that direction
+                directionsLabel.setText(segment);
+
+                // Zoom to the extent of that segment
+                mMap.setExtent(hiddenSegmentsLayer.getGraphic(selectedSegmentID).getGeometry(), 50);
+                break;
+            }
+        }
+    }
 }
 

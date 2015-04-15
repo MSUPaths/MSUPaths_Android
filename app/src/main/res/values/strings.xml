@@ -60,18 +60,11 @@
     <!--Sound button on the Map Display-->
     <string name="sound">Sound</string>
 
-    <!--On the Map Display-->
-    <string name="route_label">Press and hold map to route to that point or Click on the Get Directions icon</string>
     <!--For Routing List Fragment-->
     <string name="actionBar_direction">Get Directions</string>
 
     <!--Following for routing dialog-->
     <string name="geocode_url">http://prod.gis.msu.edu/arcgis/rest/services/routing/ped_network/NAServer/Route</string>
-    <string name="useCurrlocation">Use current Location</string>
-    <string name="routing_title">Routing</string>
-    <string name="swap_addresses">Swap addresses</string>
-    <string name="clearText">Click to clear text</string>
-    <string name="route">Route</string>
-    <string name="my_location">My Location</string>
+
 
 </resources>

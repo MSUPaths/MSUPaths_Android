@@ -33,14 +33,6 @@
             android:background="@android:color/white"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/iv_cancel"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_cancel"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/directionsLabel"
                 android:layout_width="0dp"
@@ -49,13 +41,6 @@
                 android:padding="8dp"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/iv_getDirections"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_loc_directions" />
 
             <ImageView
                 android:id="@+id/iv_myLocation"

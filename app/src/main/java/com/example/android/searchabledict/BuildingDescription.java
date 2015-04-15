@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BuildingDescription extends Activity {
-
     private TextView mBuilding;
     private TextView mDefinition;
     private TextView mAbbr;
@@ -30,8 +29,6 @@ public class BuildingDescription extends Activity {
         mDescription = (TextView) findViewById(R.id.description);
         btnGo = (Button) findViewById(R.id.go_button);
 
-
-
         Intent intent = getIntent();
 
         String building = intent.getStringExtra("building");
@@ -41,7 +38,6 @@ public class BuildingDescription extends Activity {
         String imagename = intent.getStringExtra("imagename");
         final String latitude = intent.getStringExtra("latitude");
         final String longitude = intent.getStringExtra("longitude");
-
         
         mBuilding.setText(building);
         mDefinition.setText(definition);
@@ -63,9 +59,9 @@ public class BuildingDescription extends Activity {
             public void onClick(View arg0) {
                 //Starting a new Intent
                 Intent nextScreen = new Intent(getApplicationContext(), MapDisplay.class);
- 
+
+                //Put destination name, latitude, and longitude into intent for querying route
                 nextScreen.putExtra("building_name", mBuilding.getText());
-                nextScreen.putExtra("buiding_code", mDefinition.getText());
                 nextScreen.putExtra("latitude", latitude);
                 nextScreen.putExtra("longitude", longitude);
                 

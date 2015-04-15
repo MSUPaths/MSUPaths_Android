@@ -8,23 +8,16 @@
     <string name="actionBar_direction">Get Directions</string>
     <string name="app_name">Walk MSU</string>
     <string name="button_label">Go</string>
-    <string name="clearText">Click to clear text</string>
     <string name="geocode_url">http://prod.gis.msu.edu/arcgis/rest/services/routing/ped_network/NAServer/Route</string>
     <string name="image_label">Building Image</string>
     <string name="list_button_label">Building List</string>
     <string name="menu_search">Search</string>
-    <string name="my_location">My Location</string>
-    <string name="route">Route</string>
-    <string name="route_label">Press and hold map to route to that point or Click on the Get Directions icon</string>
-    <string name="routing_title">Routing</string>
     <string name="search_button_label">Search</string>
     <string name="search_instructions">Welcome to Walk MSU!</string>
     <string name="search_label">Destinations</string>
     <string name="search_results">Search results for \'<ns1:g id="string">%s</ns1:g>\': </string>
     <string name="settings_description">Definitions of words</string>
     <string name="sound">Sound</string>
-    <string name="swap_addresses">Swap addresses</string>
-    <string name="useCurrlocation">Use current Location</string>
     <!-- From: file:/Users/annalittle/AndroidstudioProjects/MSUPaths_Android/app/build/intermediates/exploded-aar/com.esri.arcgis.android/arcgis-android/10.2.5/res/values/values.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
