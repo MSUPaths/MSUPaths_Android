@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Layout;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
 import com.esri.core.geometry.Point;
+import com.esri.core.geometry.Polygon;
 import com.esri.core.geometry.Polyline;
 import com.esri.core.geometry.SpatialReference;
 import com.esri.core.map.Graphic;
@@ -67,6 +69,7 @@ public class MapDisplay extends Activity implements
 
     // Label showing the current direction, time, and length
     TextView directionsLabel;
+    Polygon tmpPoly;
 
     // List of the directions for the current route (used for the ListActivity)
     public static ArrayList<String> curDirections = null;
@@ -285,6 +288,7 @@ public class MapDisplay extends Activity implements
         directionsLabel.setText(routeSummary);
 
         // Zoom to the extent of the entire route with a padding
+        tmpPoly=mMap.getExtent();
         mMap.setExtent(curRoute.getEnvelope(), 250);
 
         // Replacing the first and last direction segments
@@ -292,6 +296,46 @@ public class MapDisplay extends Activity implements
         curDirections.add(0, "Start Location");
 
         curDirections.add(mDestinationName);
+    }
+
+    void clearSegments(){
+        hiddenSegmentsLayer.removeAll();
+        routeLayer.removeAll();
+        curDirections.clear();
+        directionsLabel.setText("");
+        mMap.setExtent(tmpPoly);
+        RoutingListAdapter adapter = (RoutingListAdapter)RoutingListFragment.mDrawerList.getAdapter();
+        adapter.directions.clear();
+        RoutingListFragment.mDrawerList.setAdapter(adapter);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.direction:
+                if (mDrawerLayout.isDrawerOpen(Gravity.END)) {
+                    mDrawerLayout.closeDrawers();
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.END);
+                }
+                return true;
+
+            case R.id.clearPaths:
+                clearSegments();
+                return true;
+
+            case R.id.selectDestination:
+                Intent listIntent = new Intent(getApplicationContext(), BuildingList.class);
+                startActivity(listIntent);
+                return true;
+
+            case R.id.destinationSearch:
+                Intent searchIntent = new Intent(getApplicationContext(), BuildingSearch.class);
+                startActivity(searchIntent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
 	<item android:id="@+id/selectDestination"     
     	android:icon="@drawable/greenarrow"        
-    	android:title="Building List" />  
+    	android:title="Building List" />
+
 	<item android:id="@+id/clearPaths"     
-    	android:title="Clear Path" /> 
+    	android:title="Clear Path" />
+
 	<item android:id="@+id/destinationSearch"
  		android:title="Search" />
+
     <item android:id="@+id/direction"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_directions"
