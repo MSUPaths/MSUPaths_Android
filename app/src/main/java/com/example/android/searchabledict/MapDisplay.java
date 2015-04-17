@@ -39,6 +39,8 @@ import android.widget.Toast;
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
+import com.esri.core.geometry.Geometry;
+import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.esri.core.geometry.Polyline;
@@ -60,7 +62,7 @@ import java.util.HashMap;
 
 //Will eventually display the map and draw the lines
 public class MapDisplay extends Activity implements
-        RoutingListFragment.onDrawerListSelectedListener,LocationListener
+        RoutingListFragment.onDrawerListSelectedListener
         {
 
     public static MapView mMap = null;
@@ -84,7 +86,9 @@ public class MapDisplay extends Activity implements
     // Current route, route summary, and gps location
     Route curRoute = null;
     String routeSummary = null;
-    public static Point mLocation = new Point( -84.480924, 42.7250467);
+    public static Point mLocation = null ;
+    //public static Point mLocation = new Point(-84.499708, 42.715706) ;
+    public static boolean routingStarted=false;
 
     // Global results variable for calculating route on separate thread
     RouteTask mRouteTask = null;
@@ -150,11 +154,7 @@ public class MapDisplay extends Activity implements
         // Set up the directions label
         directionsLabel = (TextView) findViewById(R.id.directionsLabel);
 
-        // Get destination name, latitude, and longitude from intent
-        Intent intent = getIntent();
-        mDestinationName = intent.getStringExtra("building_name");
-        Point destination = new Point(Double.valueOf(intent.getStringExtra("longitude")), Double.valueOf(intent.getStringExtra("latitude")));
-        QueryDirections(mLocation, destination);
+
 
 
         /**
@@ -183,21 +183,63 @@ public class MapDisplay extends Activity implements
             }
         });
 
-        LocationManager locationManager = (LocationManager)
-                (LocationManager) getSystemService(getBaseContext().LOCATION_SERVICE);
 
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 10, 1, this);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 10, 1, this);
-
-        /*Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        Location loc = locationManager.getLastKnownLocation(provider);
-        mLocation = new Point(loc.getLongitude(),loc.getLatitude());
-        Log.i("MapDisplay", "Found location = " + loc.getLongitude() + "," + loc.getLatitude());*/
+        LocationDisplayManager locationDisplayManager = mMap.getLocationDisplayManager();
+        locationDisplayManager.setLocationListener(new MyLocationListener());
+        locationDisplayManager.start();
+        locationDisplayManager.setAutoPanMode(LocationDisplayManager.AutoPanMode.OFF);
 
 
+
+
+
+
+    }
+
+    private class MyLocationListener implements LocationListener {
+
+        public MyLocationListener() {
+            super();
+        }
+
+        /**
+         * If location changes, update our current location. If being found for
+         * the first time, zoom to our current position with a resolution of 20
+         */
+        public void onLocationChanged(Location loc) {
+            if (loc == null)
+                return;
+            boolean zoomToMe = (mLocation == null) ? true : false;
+            mLocation = new Point(loc.getLongitude(), loc.getLatitude());
+            /*if (zoomToMe) {
+                final SpatialReference wm = SpatialReference.create(102100);
+                final SpatialReference egs = SpatialReference.create(4326);
+                Point p = (Point) GeometryEngine.project(mLocation, egs,wm);
+                mMap.zoomToResolution(p, 20.0);
+            }*/
+            // Get destination name, latitude, and longitude from intent
+            if(routingStarted==false) {
+                Intent intent = getIntent();
+                mDestinationName = intent.getStringExtra("building_name");
+                Point destination = new Point(Double.valueOf(intent.getStringExtra("longitude")), Double.valueOf(intent.getStringExtra("latitude")));
+                QueryDirections(mLocation, destination);
+                routingStarted=true;
+            }
+
+        }
+
+        public void onProviderDisabled(String provider) {
+            Toast.makeText(getApplicationContext(), "GPS Disabled",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onProviderEnabled(String provider) {
+            Toast.makeText(getApplicationContext(), "GPS Enabled",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
 
     }
 
@@ -300,12 +342,8 @@ public class MapDisplay extends Activity implements
         Graphic endGraphic = new Graphic(
                 ((Polyline) routeGraphic.getGeometry()).getPoint(((Polyline) routeGraphic
                         .getGeometry()).getPointCount() - 1), destinationSymbol);
-        PictureMarkerSymbol startSymbol = new PictureMarkerSymbol(
-                mMap.getContext(), getResources().getDrawable(
-                R.drawable.blue_dot));
-        Graphic startGraphic = new Graphic(((Polyline) routeGraphic.getGeometry()).getPoint(0), startSymbol);
 
-        routeLayer.addGraphics(new Graphic[] { startGraphic, routeGraphic, endGraphic });
+        routeLayer.addGraphics(new Graphic[] { routeGraphic, endGraphic });
 
         // Get the full route summary
         routeSummary = String.format("Path to %s%n%.1f minutes (%.1f miles)",
@@ -369,12 +407,14 @@ public class MapDisplay extends Activity implements
     protected void onPause() {
         super.onPause();
         mMap.pause();
+        routingStarted=false;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mMap.unpause();
+
     }
 
  /*
@@ -406,57 +446,6 @@ public class MapDisplay extends Activity implements
                 break;
             }
         }
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {}
-
-    @Override
-    public void onProviderEnabled(String provider) {}
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-    @Override
-    public void onLocationChanged(Location loc) {
-        mLocation = new Point(loc.getLongitude(),loc.getLatitude());
-        Log.i("MapDisplay", "Found location = " + loc.getLongitude() + "," + loc.getLatitude());
-        SimpleLineSymbol routeSymbol = new SimpleLineSymbol(Color.BLUE, 3);
-        Graphic routeGraphic = new Graphic(curRoute.getRouteGraphic().getGeometry(), routeSymbol);
-        PictureMarkerSymbol startSymbol = new PictureMarkerSymbol(
-                mMap.getContext(), getResources().getDrawable(
-                R.drawable.blue_dot));
-        Graphic startGraphic = new Graphic(((Polyline) routeGraphic.getGeometry()).getPoint(0), startSymbol);
-        //startGraphic.
-
-        /*editLocation.setText("");
-        pb.setVisibility(View.INVISIBLE);
-        Toast.makeText(
-                getBaseContext(),
-                "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                        + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-        String longitude = "Longitude: " + loc.getLongitude();
-        Log.v(TAG, longitude);
-        String latitude = "Latitude: " + loc.getLatitude();
-        Log.v(TAG, latitude);*/
-
-/*------- To get city name from coordinates -------- */
-        /*String cityName = null;
-        Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-        List<Address> addresses;
-        try {
-            addresses = gcd.getFromLocation(loc.getLatitude(),
-                    loc.getLongitude(), 1);
-            if (addresses.size() > 0)
-                System.out.println(addresses.get(0).getLocality());
-            cityName = addresses.get(0).getLocality();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                + cityName;
-        editLocation.setText(s);*/
     }
 }
 
