@@ -41,9 +41,12 @@ import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
 import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.GeometryEngine;
+import com.esri.core.geometry.MultiPath;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.esri.core.geometry.Polyline;
+import com.esri.core.geometry.Segment;
+import com.esri.core.geometry.SegmentIterator;
 import com.esri.core.geometry.SpatialReference;
 import com.esri.core.map.Graphic;
 import com.esri.core.symbol.PictureMarkerSymbol;
@@ -285,6 +288,7 @@ public class MapDisplay extends Activity implements
      */
     void updateUI() {
         dialog.dismiss();
+        String TAG = "MapDisplay::updateUI";
 
         if (mResults == null) {
             Toast.makeText(MapDisplay.this, mException.toString(), Toast.LENGTH_LONG).show();
@@ -331,6 +335,20 @@ public class MapDisplay extends Activity implements
                     count, rd.getText(), rd.getMinutes(), rd.getLength()));
             Graphic routeGraphic = new Graphic(rd.getGeometry(), segmentHider,
                     attribs);
+            Geometry g=rd.getGeometry();
+            int t= g.getType().value();
+
+            Log.i("MapDisplay::updateUI",""+g.isSegment(t)+" "+g.isMultiPath(t)+" "+g.isPoint(t));
+            MultiPath p = (MultiPath)g;
+            Log.i("MapDisplay::updateUI",""+p.getPathCount()+" "+p.getPointCount()+" "+p.getSegmentCount());
+            int cnt=p.getPointCount();
+            for(int i=0;i<cnt;i++)
+            {
+                Point tmpPt = p.getPoint(i);
+                Log.i(TAG,""+tmpPt.getX()+" "+tmpPt.getY());
+            }
+
+            Log.i(TAG,""+curDirections.toArray()[curDirections.size()-1]);
             hiddenSegmentsLayer.addGraphic(routeGraphic);
             count++;
         }
