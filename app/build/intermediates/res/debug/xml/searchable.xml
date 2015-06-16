@@ -37,4 +37,4 @@
         android:searchSuggestAuthority="com.example.android.searchabledict.DBProvider"
         android:searchSuggestIntentAction="android.intent.action.VIEW">
 </searchable>
-<!-- From: file:/Users/annalittle/AndroidstudioProjects/MSUPaths_Android/app/src/main/res/xml/searchable.xml -->
+<!-- From: file:/Users/perrych2/git/github/MSUPaths_Android/app/src/main/res/xml/searchable.xml -->

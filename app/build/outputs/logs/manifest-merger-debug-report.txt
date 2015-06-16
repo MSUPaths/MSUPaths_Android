@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:1:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:1:11
 	package
 		ADDED from AndroidManifest.xml:2:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -13,6 +11,8 @@ ADDED from AndroidManifest.xml:1:1
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:1:11
 application
 ADDED from AndroidManifest.xml:6:5
 MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:17:5
@@ -60,10 +60,10 @@ ADDED from AndroidManifest.xml:28:9
 		ADDED from AndroidManifest.xml:28:19
 provider#com.example.android.searchabledict.DBProvider
 ADDED from AndroidManifest.xml:31:9
-	android:syncable
-		ADDED from AndroidManifest.xml:33:13
 	android:authorities
 		ADDED from AndroidManifest.xml:32:13
+	android:syncable
+		ADDED from AndroidManifest.xml:33:13
 	android:name
 		ADDED from AndroidManifest.xml:31:19
 activity#com.example.android.searchabledict.BuildingSearch
@@ -104,12 +104,12 @@ ADDED from AndroidManifest.xml:54:5
 	android:name
 		ADDED from AndroidManifest.xml:54:22
 uses-feature#0x00020000
-ADDED from AndroidManifest.xml:56:5
+ADDED from AndroidManifest.xml:57:5
 MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:13:5
-	android:required
-		ADDED from AndroidManifest.xml:58:9
 	android:glEsVersion
-		ADDED from AndroidManifest.xml:57:9
+		ADDED from AndroidManifest.xml:58:9
+	android:required
+		ADDED from AndroidManifest.xml:59:9
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.esri.arcgis.android:arcgis-android:10.2.5:7:5
