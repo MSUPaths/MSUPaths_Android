@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.esri.android.runtime.ArcGISRuntime;
 
 /**
  * MainDisplay
@@ -26,7 +27,7 @@ public class MainDisplay extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ArcGISRuntime.setClientId("yAus9A6T1rH01KUS");
         setContentView(R.layout.main);
 
         mDb.createDatabase();
