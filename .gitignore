@@ -2,3 +2,8 @@
 *.class
 .project
 .classpath
+.gradle
+/local.properties
+.idea
+.DS_Store
+**/build
