@@ -8,6 +8,7 @@ import android.widget.Button;
 /**AboutApp
  * Displays information about this application
  * Back button returns to Main Display
+ * I changed this! ^_^
  */
 public class AboutApp extends Activity {
 	@Override
